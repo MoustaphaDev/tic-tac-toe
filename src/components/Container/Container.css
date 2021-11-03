@@ -1,0 +1,17 @@
+.container {
+  padding: 2.5rem 1rem;
+  margin-inline: auto;
+}
+
+.x-align,
+.y-align {
+  display: flex;
+}
+
+.x-align {
+  justify-content: center;
+}
+
+.y-align {
+  align-items: center;
+}

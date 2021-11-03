@@ -1,0 +1,21 @@
+.tile {
+  width: 100%;
+  height: 100%;
+  background-color: #34495e;
+  padding: 25%;
+}
+
+.circle {
+  background-image: url("/assets/circle.png");
+}
+.cross {
+  background-image: url("/assets/cross.png");
+}
+
+.cross,
+.circle {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-origin: content-box;
+}
