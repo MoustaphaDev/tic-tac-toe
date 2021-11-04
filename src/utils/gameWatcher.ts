@@ -6,7 +6,7 @@ import {
   Player,
 } from "./helpers";
 
-export function checkWinner(boardMatrix: MatrixRow[]): boolean | Player {
+export function watchWinner(boardMatrix: MatrixRow[]): boolean | Player {
   const diagonalWinner = checkDiagonalsWin(boardMatrix);
   let vertOrHzWinner: boolean | Player = false;
   for (let idx of [0, 1, 2]) {
@@ -16,5 +16,5 @@ export function checkWinner(boardMatrix: MatrixRow[]): boolean | Player {
     if (vertOrHzWinner) break;
   }
 
-  return vertOrHzWinner || diagonalWinner;
+  return diagonalWinner || vertOrHzWinner;
 }

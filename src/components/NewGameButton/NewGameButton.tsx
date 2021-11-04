@@ -1,9 +1,22 @@
-import { generateEmptyBoard } from "../../utils/helpers";
+import {
+  generateEmptyBoard,
+  NewButtonProps,
+  player,
+} from "../../utils/helpers";
 import "./NewGameButton.css";
 
-function NewGameButton({ clearBoard }: { clearBoard: () => void }) {
+function NewGameButton({
+  clearBoard,
+  firstPlayerSymbol,
+  stateSetters,
+}: NewButtonProps) {
   return (
-    <button className="btn" onClick={clearBoard}>
+    <button
+      className="btn"
+      onClick={() => {
+        clearBoard(stateSetters, generateEmptyBoard, firstPlayerSymbol);
+      }}
+    >
       New game
     </button>
   );

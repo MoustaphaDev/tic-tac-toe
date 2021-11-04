@@ -1,4 +1,4 @@
-import { checkWinner } from "../utils/gameWatcher";
+import { watchWinner } from "../utils/gameWatcher";
 import {
   checkDiagonalsWin,
   checkHorizontalWin,
@@ -8,168 +8,164 @@ import {
 
 let boardMatrix: MatrixRow[];
 
-it("Should check if a player wins in the horizontal axis", () => {
+beforeEach(() => {
   //Reset board
   boardMatrix = [
     [null, null, null],
     [null, null, null],
     [null, null, null],
   ];
+});
+
+describe("Checks if a player wins in the horizontal axis if his points are aligned and looses when they're not", () => {
   // write the 3 horizontal winning scenarios
-  const hzWin1 = boardMatrix;
-  hzWin1[0][0] = hzWin1[0][1] = hzWin1[0][2] = "cross";
-  const hzWin2 = boardMatrix;
-  hzWin2[1][0] = hzWin2[1][1] = hzWin2[1][2] = "cross";
-  const hzWin3 = boardMatrix;
-  hzWin3[2][0] = hzWin3[2][1] = hzWin3[2][2] = "cross";
+  it("Checks if the player wins in a horizontal row1 win scenario", () => {
+    boardMatrix[0][0] = boardMatrix[0][1] = boardMatrix[0][2] = "cross";
+    expect(checkHorizontalWin(boardMatrix, 0)).toEqual({ player: "cross" });
+  });
 
-  // Test for winning scenrios
-  expect(checkHorizontalWin(hzWin1, 0)).toEqual({ player: "cross" });
-  expect(checkHorizontalWin(hzWin2, 1)).toEqual({ player: "cross" });
-  expect(checkHorizontalWin(hzWin3, 2)).toEqual({ player: "cross" });
+  it("Checks if the player wins in a horizontal row2 win scenario", () => {
+    boardMatrix[1][0] = boardMatrix[1][1] = boardMatrix[1][2] = "cross";
+    expect(checkHorizontalWin(boardMatrix, 1)).toEqual({ player: "cross" });
+  });
 
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
+  it("Checks if the player wins in a horizontal row3 win scenario", () => {
+    boardMatrix[2][0] = boardMatrix[2][1] = boardMatrix[2][2] = "cross";
+    expect(checkHorizontalWin(boardMatrix, 2)).toEqual({ player: "cross" });
+  });
+
   // write the 3 horizontal not winning scenarios
-  const fakeHzWin1 = boardMatrix;
-  fakeHzWin1[0][0] = fakeHzWin1[0][1] = "cross";
-  fakeHzWin1[0][2] = "circle";
-  const fakeHzWin2 = boardMatrix;
-  fakeHzWin2[1][0] = fakeHzWin2[1][1] = "cross";
-  fakeHzWin2[1][2] = "circle";
-  const fakeHzWin3 = boardMatrix;
-  fakeHzWin3[2][0] = fakeHzWin3[2][1] = "cross";
-  fakeHzWin3[2][2] = "circle";
+  it("Checks if the player doesn't win in a horizontal row1 two points aligned scenario", () => {
+    boardMatrix[0][0] = boardMatrix[0][1] = "cross";
+    boardMatrix[0][2] = "circle";
+    expect(checkHorizontalWin(boardMatrix, 0)).toBe(false);
+  });
 
-  // Test for not winning scenarios
-  expect(checkHorizontalWin(fakeHzWin1, 0)).toBe(false);
-  expect(checkHorizontalWin(fakeHzWin2, 1)).toBe(false);
-  expect(checkHorizontalWin(fakeHzWin3, 2)).toBe(false);
+  it("Checks if the player doesn't win in a horizontal row2 two points aligned scenario", () => {
+    boardMatrix[1][0] = boardMatrix[1][1] = "cross";
+    boardMatrix[1][2] = "circle";
+    expect(checkHorizontalWin(boardMatrix, 1)).toBe(false);
+  });
 
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
-  // test for empty board
-  expect(checkHorizontalWin(boardMatrix, 0)).toBe(false);
-  expect(checkHorizontalWin(boardMatrix, 1)).toBe(false);
-  expect(checkHorizontalWin(boardMatrix, 2)).toBe(false);
+  it("Checks if the player doesn't win in a horizontal row3 two points aligned scenario", () => {
+    boardMatrix[2][0] = boardMatrix[2][1] = "cross";
+    boardMatrix[2][2] = "circle";
+    expect(checkHorizontalWin(boardMatrix, 2)).toBe(false);
+  });
+
+  // test for blank board
+  it("Checks if the player doesn't win on a horizontal scenario when the board is blank", () => {
+    expect(checkHorizontalWin(boardMatrix, 0)).toBe(false);
+    expect(checkHorizontalWin(boardMatrix, 1)).toBe(false);
+    expect(checkHorizontalWin(boardMatrix, 2)).toBe(false);
+  });
 });
 
-it("Should check if a player wins in the vertical axis", () => {
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
+describe("Checks if a player wins in the vertical axis if his points are aligned and looses when they're not", () => {
   // write the 3 vertical winning scenarios
-  const vtWin1 = boardMatrix;
-  vtWin1[0][0] = vtWin1[1][0] = vtWin1[2][0] = "cross";
-  const vtWin2 = boardMatrix;
-  vtWin2[0][1] = vtWin2[1][1] = vtWin2[2][1] = "cross";
-  const vtWin3 = boardMatrix;
-  vtWin3[0][2] = vtWin3[1][2] = vtWin3[2][2] = "cross";
+  it("Checks if the player wins in a vertical column1 win scenario", () => {
+    boardMatrix[0][0] = boardMatrix[1][0] = boardMatrix[2][0] = "cross";
+    expect(checkVerticalWin(boardMatrix, 0)).toEqual({ player: "cross" });
+  });
 
-  // Test for winning scenrios
-  expect(checkVerticalWin(vtWin1, 0)).toEqual({ player: "cross" });
-  expect(checkVerticalWin(vtWin2, 1)).toEqual({ player: "cross" });
-  expect(checkVerticalWin(vtWin3, 2)).toEqual({ player: "cross" });
+  it("Checks if the player wins in a vertical column2 win scenario", () => {
+    boardMatrix[0][1] = boardMatrix[1][1] = boardMatrix[2][1] = "cross";
+    expect(checkVerticalWin(boardMatrix, 1)).toEqual({ player: "cross" });
+  });
 
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
+  it("Checks if the player wins in a vertical column3 win scenario", () => {
+    boardMatrix[0][2] = boardMatrix[1][2] = boardMatrix[2][2] = "cross";
+    expect(checkVerticalWin(boardMatrix, 2)).toEqual({ player: "cross" });
+  });
+
   // write the 3 vertical not winning scenarios
-  const fakeVtWin1 = boardMatrix;
-  fakeVtWin1[0][0] = fakeVtWin1[1][0] = "cross";
-  fakeVtWin1[2][0] = "circle";
-  const fakeVtWin2 = boardMatrix;
-  fakeVtWin2[0][1] = fakeVtWin2[1][1] = "cross";
-  fakeVtWin2[2][1] = "circle";
-  const fakeVtWin3 = boardMatrix;
-  fakeVtWin3[0][2] = fakeVtWin3[1][2] = "cross";
-  fakeVtWin3[2][2] = "circle";
+  it("Checks if the player doesn't win in a vertical column1 two points aligned scenario", () => {
+    boardMatrix[0][0] = boardMatrix[1][0] = "cross";
+    boardMatrix[2][0] = "circle";
+    expect(checkVerticalWin(boardMatrix, 0)).toBe(false);
+  });
 
-  // Test for not winning scenarios
-  expect(checkVerticalWin(fakeVtWin1, 0)).toBe(false);
-  expect(checkVerticalWin(fakeVtWin2, 1)).toBe(false);
-  expect(checkVerticalWin(fakeVtWin3, 2)).toBe(false);
+  it("Checks if the player doesn't win in a vertical column2 two points aligned scenario", () => {
+    boardMatrix[0][1] = boardMatrix[1][1] = "cross";
+    boardMatrix[2][1] = "circle";
+    expect(checkVerticalWin(boardMatrix, 1)).toBe(false);
+  });
 
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
-  // test for empty board
-  expect(checkVerticalWin(boardMatrix, 0)).toBe(false);
-  expect(checkVerticalWin(boardMatrix, 1)).toBe(false);
-  expect(checkVerticalWin(boardMatrix, 2)).toBe(false);
+  it("Checks if the player doesn't win in a vertical column3 two points aligned scenario", () => {
+    boardMatrix[0][2] = boardMatrix[1][2] = "cross";
+    boardMatrix[2][2] = "circle";
+    expect(checkVerticalWin(boardMatrix, 2)).toBe(false);
+  });
+
+  // test for blank board
+  it("Checks if the player doesn't win on a vertical scenario when the board is blank", () => {
+    expect(checkVerticalWin(boardMatrix, 0)).toBe(false);
+    expect(checkVerticalWin(boardMatrix, 1)).toBe(false);
+    expect(checkVerticalWin(boardMatrix, 2)).toBe(false);
+  });
 });
 
-it("Should check if a player wins in the diagonals", () => {
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
+describe("Checks if a player wins in the diagonals if his points are aligned and looses when they're not", () => {
   // write the 3 vertical winning scenarios
-  const diagWin1 = boardMatrix;
-  diagWin1[0][0] = diagWin1[1][1] = diagWin1[2][2] = "cross";
-  const diagWin2 = boardMatrix;
-  diagWin2[0][2] = diagWin2[1][1] = diagWin2[2][0] = "cross";
+  it("Checks if the player wins in a diagonal win scenario", () => {
+    boardMatrix[0][0] = boardMatrix[1][1] = boardMatrix[2][2] = "cross";
+    expect(checkDiagonalsWin(boardMatrix)).toEqual({ player: "cross" });
+  });
 
-  // Test for winning scenrios
-  expect(checkDiagonalsWin(diagWin1)).toEqual({ player: "cross" });
-  expect(checkDiagonalsWin(diagWin2)).toEqual({ player: "cross" });
+  it("Checks if the player wins in an anti-diagonal win scenario", () => {
+    boardMatrix[0][2] = boardMatrix[1][1] = boardMatrix[2][0] = "cross";
+    expect(checkDiagonalsWin(boardMatrix)).toEqual({ player: "cross" });
+  });
 
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
   // write the 3 vertical not winning scenarios
-  const fakeDiagWin1 = boardMatrix;
-  fakeDiagWin1[0][0] = fakeDiagWin1[1][1] = "cross";
-  fakeDiagWin1[2][2] = "circle";
+  it("Checks if the player doesn't wins in a diagonal two points aligned", () => {
+    boardMatrix[0][0] = boardMatrix[1][1] = "cross";
+    boardMatrix[2][2] = "circle";
+    expect(checkDiagonalsWin(boardMatrix)).toBe(false);
+  });
 
-  const fakeDiagWin2 = boardMatrix;
-  fakeDiagWin2[0][2] = fakeDiagWin2[1][1] = "cross";
-  fakeDiagWin2[2][0] = "circle";
+  it("Checks if the player doesn't wins in an anti-diagonal two points aligned", () => {
+    boardMatrix[0][2] = boardMatrix[1][1] = "cross";
+    boardMatrix[2][0] = "circle";
+    expect(checkDiagonalsWin(boardMatrix)).toBe(false);
+  });
 
-  // Test for not winning scenrios
-  expect(checkDiagonalsWin(fakeDiagWin1)).toBe(false);
-  expect(checkDiagonalsWin(fakeDiagWin2)).toBe(false);
-
-  //Reset board
-  boardMatrix = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
-  // test for empty board
-  expect(checkDiagonalsWin(boardMatrix)).toBe(false);
-  expect(checkDiagonalsWin(boardMatrix)).toBe(false);
-  expect(checkDiagonalsWin(boardMatrix)).toBe(false);
+  // test for blank board
+  it("Checks if the player doesn't wins in a diagonal scenario when the board is blank", () => {
+    expect(checkDiagonalsWin(boardMatrix)).toBe(false);
+    expect(checkDiagonalsWin(boardMatrix)).toBe(false);
+    expect(checkDiagonalsWin(boardMatrix)).toBe(false);
+  });
 });
 
-it("Should check if a player is winning by checking the board's state", () => {
-  //Reset board
-  boardMatrix = [
-    ["cross", "circle", null],
-    [null, "cross", null],
-    [null, null, "cross"],
-  ];
-  expect(checkWinner(boardMatrix)).toEqual({ player: "cross" });
+describe("Checks if a player is winning when three points are aligned", () => {
+  it("Checks if a player is winning when three points are vertically aligned", () => {
+    boardMatrix = [
+      ["cross", "circle", null],
+      ["cross", null, "circle"],
+      ["cross", null, null],
+    ];
+    expect(watchWinner(boardMatrix)).toEqual({ player: "cross" });
+  });
+  it("Checks if a player is winning when three points are horizontally aligned", () => {
+    boardMatrix = [
+      [null, "circle", null],
+      ["circle", null, null],
+      ["cross", "cross", "cross"],
+    ];
+    expect(watchWinner(boardMatrix)).toEqual({ player: "cross" });
+  });
+
+  it("Checks if a player is winning when three points are aligned along the diagonal", () => {
+    boardMatrix = [
+      ["cross", "circle", null],
+      [null, "cross", null],
+      ["circle", null, "cross"],
+    ];
+    expect(watchWinner(boardMatrix)).toEqual({ player: "cross" });
+  });
+
+  it("Checks if a player is not winning when the board is blank", () => {
+    expect(watchWinner(boardMatrix)).toEqual(false);
+  });
 });

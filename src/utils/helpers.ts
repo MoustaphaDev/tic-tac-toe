@@ -7,12 +7,36 @@ export interface Coordinates {
 }
 
 export interface TileProps extends Coordinates {
-  selectTile: ({ xCoord, yCoord }: Coordinates) => void;
+  selectTile: (
+    { xCoord, yCoord }: Coordinates,
+    boardMatrix: MatrixRow[],
+    stateSetters: stateSetters,
+    currentSymbol: player
+  ) => void;
+  stateSetters: stateSetters;
   boardMatrix: MatrixRow[];
+  currentSymbol: player;
 }
 
+export type player = "cross" | "circle" | null;
+
 export interface Player {
-  player: "cross" | "circle" | null;
+  player: player;
+}
+
+export interface stateSetters {
+  setBoardMatrix: React.Dispatch<React.SetStateAction<MatrixRow[]>>;
+  setCurrentSymbol: React.Dispatch<React.SetStateAction<player>>;
+  setWinner: React.Dispatch<React.SetStateAction<boolean | Player>>;
+}
+export interface NewButtonProps {
+  clearBoard: (
+    stateSetters: stateSetters,
+    generateEmptyBoard: () => MatrixRow[],
+    firstPlayerSymbol: player
+  ) => void;
+  firstPlayerSymbol: player;
+  stateSetters: stateSetters;
 }
 
 // BOARD GENERATOR

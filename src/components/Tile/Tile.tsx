@@ -1,9 +1,17 @@
 import "./Tile.css";
 import { TileProps } from "../../utils/helpers";
+import { player } from "../../utils/helpers";
 
-function Tile({ selectTile, xCoord, yCoord, boardMatrix }: TileProps) {
+function Tile({
+  selectTile,
+  xCoord,
+  yCoord,
+  boardMatrix,
+  stateSetters,
+  currentSymbol,
+}: TileProps) {
   function setTileShape() {
-    selectTile({ xCoord, yCoord });
+    selectTile({ xCoord, yCoord }, boardMatrix, stateSetters, currentSymbol);
   }
   return (
     <div
