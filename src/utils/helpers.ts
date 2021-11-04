@@ -6,6 +6,21 @@ export interface Coordinates {
   yCoord: number;
 }
 
+export interface ContainerProps {
+  children:
+    | JSX.Element
+    | JSX.Element[]
+    | JSX.IntrinsicElements
+    | JSX.IntrinsicElements[];
+  xAlign?: boolean;
+  yAlign?: boolean;
+}
+
+export interface BoardChildren {
+  children: JSX.Element[];
+  winner?: Player | boolean | null;
+}
+
 export interface TileProps extends Coordinates {
   selectTile: (
     { xCoord, yCoord }: Coordinates,
@@ -27,7 +42,7 @@ export interface Player {
 export interface stateSetters {
   setBoardMatrix: React.Dispatch<React.SetStateAction<MatrixRow[]>>;
   setCurrentSymbol: React.Dispatch<React.SetStateAction<player>>;
-  setWinner: React.Dispatch<React.SetStateAction<boolean | Player>>;
+  setWinner: React.Dispatch<React.SetStateAction<null | boolean | Player>>;
 }
 export interface NewButtonProps {
   clearBoard: (
@@ -62,6 +77,13 @@ export function getX(idx: number) {
 
 export function getY(idx: number) {
   return (idx - getX(idx)) / 3;
+}
+
+// UTILITIES
+export function linearizeGrid(boardMatrix: MatrixRow[]) {
+  return [...boardMatrix].reduce((tiles, row) => {
+    return [...tiles, ...row];
+  }, []);
 }
 
 // GAME EVENTS WATCHERS
@@ -110,4 +132,10 @@ export function checkDiagonalsWin(boardMatrix: MatrixRow[]): boolean | Player {
       player: boardMatrix[1][1],
     }
   );
+}
+
+export function checkBoardFull(boardMatrix: MatrixRow[]): boolean {
+  const linearizedGrid = linearizeGrid(boardMatrix);
+  const isBoardFull = linearizedGrid.every((point) => !!point);
+  return isBoardFull;
 }

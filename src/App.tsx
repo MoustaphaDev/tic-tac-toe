@@ -11,6 +11,7 @@ import {
   getY,
   player,
   Player,
+  linearizeGrid,
 } from "./utils/helpers";
 import { handleClearBoard, handleSelectTile } from "./utils/gameEventHandlers";
 
@@ -19,25 +20,22 @@ function App({ firstPlayerSymbol }: { firstPlayerSymbol: "cross" | "circle" }) {
   const [boardMatrix, setBoardMatrix] = useState<MatrixRow[]>(
     generateEmptyBoard()
   );
-  const [winner, setWinner] = useState<boolean | Player>(false);
+  const [winner, setWinner] = useState<null | boolean | Player>(false);
   const stateSetters = { setBoardMatrix, setCurrentSymbol, setWinner };
 
+  // effect triggered when "winner" value changes
   useEffect(() => {
-    if (typeof winner === "object") {
-      console.log(`${winner.player}`);
+    if (typeof winner === "object" && winner !== null) {
       setCurrentSymbol(null);
-      setWinner(false);
     }
   }, [winner]);
 
-  const linearizedGrid = boardMatrix.reduce((tiles, row) => {
-    return [...tiles, ...row];
-  }, []);
+  const linearizedGrid = linearizeGrid(boardMatrix);
 
   return (
     <>
       <Container xAlign={true}>
-        <Board>
+        <Board winner={winner}>
           {linearizedGrid.map((shape, idx) => {
             return (
               <Tile

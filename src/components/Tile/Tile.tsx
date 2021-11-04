@@ -13,9 +13,12 @@ function Tile({
   function setTileShape() {
     selectTile({ xCoord, yCoord }, boardMatrix, stateSetters, currentSymbol);
   }
+  const tileClassName = `tile border-style ${
+    boardMatrix[yCoord][xCoord] ?? ""
+  }`;
   return (
     <div
-      className={`tile border-style ${boardMatrix[yCoord][xCoord] ?? ""}`}
+      className={tileClassName}
       onClick={boardMatrix[yCoord][xCoord] ? undefined : setTileShape}
     ></div>
   );

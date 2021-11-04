@@ -4,3 +4,27 @@
   width: min(80vw, 30rem);
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
+
+.overlay {
+  position: absolute;
+  height: min(80vw, 30rem);
+  width: min(80vw, 30rem);
+  background-color: rgba(0, 0, 0, 0.404);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  text-align: center;
+  font-size: 3.5rem;
+  border: 1px solid #fff;
+}
+
+@media only screen and (max-width: 424px) {
+  .overlay {
+    font-size: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 265px) {
+  .overlay {
+    font-size: 2rem;
+  }
+}
