@@ -11,6 +11,7 @@
   width: min(80vw, 30rem);
   background-color: rgba(0, 0, 0, 0.404);
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   color: #fff;
   text-align: center;
   font-size: 3.5rem;
